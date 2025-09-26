@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CSS Pseudo-Selectors Playground</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background: #f9f9f9;
+      line-height: 1.6;
+    }
+    h1 {
+      text-align: center;
+      color: #444;
+    }
+    .playground {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-top: 30px;
+    }
+    .demo, .feedback, .notes {
+      padding: 20px;
+      border: 2px solid #ccc;
+      border-radius: 10px;
+      background: #fff;
+      box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+    }
+    .demo h2, .feedback h2, .notes h2 {
+      margin-bottom: 10px;
+      color: #333;
+    }
+
+    /* ---------- Pseudo-Classes Demo ---------- */
+    a.demo-link {
+      display: inline-block;
+      margin: 10px 0;
+      color: blue;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    a.demo-link:hover {
+      color: red;
+      text-decoration: underline;
+    }
+
+    button.demo-btn {
+      padding: 10px 20px;
+      margin: 10px 0;
+      border: 2px solid #444;
+      background: lightgray;
+      cursor: pointer;
+    }
+    button.demo-btn:active {
+      background: orange;
+      color: white;
+    }
+
+    input.demo-input {
+      display: block;
+      margin: 10px 0;
+      padding: 8px;
+      border: 2px solid gray;
+    }
+    input.demo-input:focus {
+      border: 2px solid orange;
+      background: lightyellow;
+      outline: none;
+    }
+
+    ul.demo-list {
+      list-style: none;
+      padding: 0;
+    }
+    ul.demo-list li {
+      padding: 5px 10px;
+    }
+    ul.demo-list li:first-child {
+      font-weight: bold;
+      background: #d9f7d9;
+      color: red;
+    }
+    ul.demo-list li:nth-child(even) {
+      background: #f2f2f2;
+      color: blue;
+    }
+
+    /* ---------- Pseudo-Elements Demo ---------- */
+    p.demo-text::first-letter {
+      font-size: 2em;
+      color: darkred;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+    p.demo-text::first-line {
+      font-variant: small-caps;
+      color: darkblue;
+    }
+
+    input.demo-input::placeholder {
+      color: gray;
+      font-style: italic;
+    }
+
+    .decorated::before {
+      content: "★ ";
+      color: gold;
+    }
+    .decorated::after {
+      content: " ★";
+      color: gold;
+    }
+
+    ::selection {
+      background: lightblue;
+      color: black;
+    }
+
+    /* ---------- Feedback Panel ---------- */
+    #feedback {
+      font-size: 1.05em;
+      color: darkblue;
+      min-height: 80px;
+      white-space: pre-line; /* allows multiple lines */
+    }
+  </style>
+</head>
+<body>
+  <h1>🎮 CSS Pseudo-Selectors Playground</h1>
+
+  <div class="playground">
+    <!-- DEMO ZONE -->
+    <div class="demo">
+      <h2>Try These!</h2>
+      <a href="#" class="demo-link">Hover over me!</a><br>
+      <button class="demo-btn">Click me!</button><br>
+      <input type="text" class="demo-input" placeholder="Focus on me!"><br>
+
+      <ul class="demo-list">Parent
+        <li>First Child</li>
+        <li>Second Child</li>
+        <li>Third Child</li>
+      </ul>
+
+      <p class="demo-text">This is a paragraph with special styling.</br> Notice the first letter and the first line are styled differently.</p>
+
+      <div class="decorated">Special content</div>
+    </div>
+
+    <!-- FEEDBACK ZONE -->
+    <div class="feedback">
+      <h2>Live Feedback</h2>
+      <p id="feedback">👆 Try hovering, clicking, focusing, or selecting text to see CSS magic!</p>
+    </div>
+  </div>
+
+  <!-- NOTES SECTION -->
+  <div class="notes" style="margin-top: 30px;">
+    <h2>📘 Notes: Pseudo-Classes & Pseudo-Elements</h2>
+    <h3>Pseudo-Classes</h3>
+    <ul>
+      <li><b>:hover</b> → Styles an element when the mouse is over it.</li>
+      <li><b>:active</b> → Styles an element when it is being clicked.</li>
+      <li><b>:focus</b> → Styles an element when it is selected/ready for input.</li>
+      <li><b>:first-child</b> → Selects the first element inside its parent.</li>
+      <li><b>:nth-child(n)</b> → Selects the nth element (odd/even patterns too).</li>
+    </ul>
+
+    <h3>Pseudo-Elements</h3>
+    <ul>
+      <li><b>::first-letter</b> → Styles the first letter of text.</li>
+      <li><b>::first-line</b> → Styles the first line of text.</li>
+      <li><b>::before</b> / <b>::after</b> → Insert decorative content before/after.</li>
+      <li><b>::placeholder</b> → Styles placeholder text in inputs.</li>
+      <li><b>::selection</b> → Styles text when the user highlights it.</li>
+    </ul>
+    <p><i>💡 Tip: Pseudo-classes react to user actions or element position, while pseudo-elements let you style or add parts of an element without extra HTML.</i></p>
+  </div>
+
+  <script>
+    const feedback = document.getElementById('feedback');
+
+    // Helper to write multi-line feedback
+    function showFeedback(title, detail) {
+      feedback.textContent = `${title}\n\n${detail}`;
+    }
+
+    // Pseudo-classes
+    document.querySelector('.demo-link').addEventListener('mouseover', () => {
+      showFeedback("You triggered :hover on the link!",
+        "The link changed color because :hover applies a new style when the mouse is over it.\nThis helps create interactive effects without JavaScript.");
+    });
+    document.querySelector('.demo-link').addEventListener('mouseout', () => {
+      showFeedback("Hover ended.", "The mouse moved away, so :hover no longer applies.");
+    });
+
+    document.querySelector('.demo-btn').addEventListener('mousedown', () => {
+      showFeedback("You triggered :active on the button!",
+        ":active styles appear while the button is being pressed down.\nIt’s often used to give instant feedback to clicks.");
+    });
+    document.querySelector('.demo-btn').addEventListener('mouseup', () => {
+      showFeedback("Button released.", "The :active state ended because the button is no longer pressed.");
+    });
+
+    document.querySelector('.demo-input').addEventListener('focus', () => {
+      showFeedback("You triggered :focus on the input!",
+        ":focus highlights elements that are active for typing.\nThis is important for accessibility and keyboard navigation.");
+    });
+    document.querySelector('.demo-input').addEventListener('blur', () => {
+      showFeedback("Input lost focus.", "The :focus style is removed when you click outside the input.");
+    });
+
+     const listItems = document.querySelectorAll(".demo-list li");
+        listItems.forEach((li, index) => {
+      li.addEventListener("mouseenter", () => {
+        li.style.background = "lightgreen"; // highlight on hover
+        feedback.textContent = `You hovered on "${li.textContent}" (Child ${index + 1}).`;
+      });
+
+      li.addEventListener("mouseleave", () => {
+        li.style.background = "#f2f2f2"; // reset color
+        feedback.textContent = "Hover over an item to see feedback...";
+      });
+    });
+
+    // Pseudo-elements
+    document.querySelector('.demo-text').addEventListener('click', () => {
+      showFeedback("This paragraph uses ::first-letter and ::first-line!",
+        "The first letter is styled larger and darker, while the first line is automatically capitalized.\nPseudo-elements let us style parts of text directly.");
+    });
+
+    document.querySelector('.decorated').addEventListener('click', () => {
+      showFeedback("This div is decorated with ::before and ::after!",
+        "Stars (★) were added before and after the content without writing them in HTML.\nThis shows how CSS can add decorative content.");
+    });
+
+    document.addEventListener('selectionchange', () => {
+      if (window.getSelection().toString().length > 0) {
+        showFeedback("You triggered ::selection!",
+          "When you highlight text, ::selection changes its background and text color.\nIt gives users a nicer experience than the default blue highlight.");
+      }
+    });
+  </script>
+</body>
+</html>
